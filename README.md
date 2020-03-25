@@ -47,3 +47,9 @@ C:\Users\User\path_to_KVFinder\KVFinder-win-x.x> kvfinder-win.exe -i example\1FM
 Running KVFinder for input\1FMO.pdb...done!
 
 ```
+
+# Citing KVFinder software
+If you use KVFinder in your publication, refer to this [article](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-15-197).
+
+Oliveira, S.H., Ferraz, F.A., Honorato, R.V. et al. KVFinder: steered identification of protein cavities as a PyMOL plugin. BMC Bioinformatics 15, 197 (2014). https://doi.org/10.1186/1471-2105-15-197
+
