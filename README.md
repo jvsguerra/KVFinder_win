@@ -1,5 +1,4 @@
 # KVFinder_win
-Deprecated KVFinder version
 
 Working features:
 - Command-line interface (kvfinder-win.exe)
