@@ -680,8 +680,8 @@ def LoadResults(rf, par, l_out, l_out2, l_res,inp_file,lig_file,out_file):
                 return
 
 
-    load_object_input = input_file.split('/')[len(input_file.split('/'))-1][:-4]
-    load_object_output = output_file.split('/')[len(output_file.split('/'))-1][:-4]
+    load_object_input = input_file.split('\\')[len(input_file.split('\\'))-1][:-4]
+    load_object_output = output_file.split('\\')[len(output_file.split('\\'))-1][:-4]
 
     active_objects = cmd.get_names("all")
 
@@ -1038,8 +1038,8 @@ def runKVFinder(d, s, p, v, surf, lf, dc, l, o, l_out, p_out,inp_file,lig_file,o
     results.close()
 
 
-    if os.path.isfile(path.get()+'KV_Files\kvfinder_error.log') == 1:
-        os.system("del "+'KV_Files\kvfinder_error.log')
+    if os.path.isfile(path.get()+'KV_Files\\kvfinder_error.log') == 1:
+        os.system("del "+'KV_Files\\kvfinder_error.log')
 
     print "Running KVFinder for "+infile.get()+"..."
     os.system("\""+os.getenv('KVFinder_PATH')+'\\KVFinder.exe\" 2> '+'KV_Files\\kvfinder_error.log 1> '+o.get()+'.KVFinder.output.tmp')
@@ -1102,7 +1102,7 @@ def runKVFinder(d, s, p, v, surf, lf, dc, l, o, l_out, p_out,inp_file,lig_file,o
         cmd.set("auto_zoom",1)
 
     os.system('del Parameters.txt')
-    os.system('copy KVParameters.txt '+path.get()+'KV_Files/KVParameters_'+o.get()[i:])
+    os.system('copy KVParameters.txt '+path.get()+'KV_Files\\KVParameters_'+o.get()[i:])
 
     results = open(o.get()+".KVFinder.results.txt","a")
     results.write("\n#Interface Residues for Each Cavity\n")
@@ -1209,7 +1209,7 @@ def runKVFinderBasic(d, s, p, v, o, surf, lf, dc, l, l_out, p_out,inp_file,lig_f
     ligandAd.set(ligandAdTmp.get())
 
     results = open(o.get()+".KVFinder.results.txt","w+")
-    results.write("KVFinder Input = "+'KV_Files/'+o.get()+'.KVFinder.input.pdb\nKVFinder Output = '+o.get()+".KVFinder.output.pdb\n\n#KVFinder Results:\n")
+    results.write("KVFinder Input = "+'KV_Files\\'+o.get()+'.KVFinder.input.pdb\nKVFinder Output = '+o.get()+".KVFinder.output.pdb\n\n#KVFinder Results:\n")
     results.close()
 
     if os.path.isfile(path.get()+'KV_Files\\kvfinder_error.log') == 1:
@@ -1258,7 +1258,7 @@ def runKVFinderBasic(d, s, p, v, o, surf, lf, dc, l, l_out, p_out,inp_file,lig_f
     if ligandAd.get() == 1:
         if len(lf.get(lf.curselection())) > 30:
             j = 0
-            while lf.get(lf.curselection())[-30:][j] != '/' and j < len(lf.get(lf.curselection())[-30:]) - 1:
+            while lf.get(lf.curselection())[-30:][j] != '\\' and j < len(lf.get(lf.curselection())[-30:]) - 1:
                 j = j + 1
             if len(lf.get(lf.curselection())[-30:]) - j == 1:
                 j = 0
@@ -1276,7 +1276,7 @@ def runKVFinderBasic(d, s, p, v, o, surf, lf, dc, l, l_out, p_out,inp_file,lig_f
         cmd.set("auto_zoom",1)
 
     os.system('del Parameters.txt')
-    os.system('copy KVParameters.txt KV_Files/KVParameters_'+o.get())
+    os.system('copy KVParameters.txt KV_File\\KVParameters_'+o.get())
 
     results = open(o.get()+".KVFinder.results.txt","a")
     results.write("\n#Interface Residues for Each Cavity\n")
@@ -1411,7 +1411,7 @@ def restore(d, s, p, v, sas, ms, checkLA, checkSR, lf, dc, o, p_out, checkOW, ch
     global StepRed, ligandAd, OverW, chargeDisplay, WholeProt, BoxMode
 
     d.delete(0, len(d.get()))
-    d.insert(0, os.getenv('KVFinder_PATH')+'/dictionary')
+    d.insert(0, os.getenv('KVFinder_PATH')+'\\dictionary')
     d.xview(d.index('end')-20)
 
 
