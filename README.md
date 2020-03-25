@@ -19,7 +19,7 @@ Compatible with:
 - Open PyMOL 1.8x
 - Go to the **Plugin Manager** option under **Plugin** menu
 - Go to the **Install New Plugin**, select **Choose file...** inside **Install from local file**.
-- Select **kvfinder_pymolplugin_windows.py** insider **tools** directory.
+- Select **kvfinder_pymolplugin_windows.py** inside **tools** directory.
 - A window will appear confirming that the plugin has been installed.
 - Restart PyMOL.
 - KVFinder plugin is ready to use.
