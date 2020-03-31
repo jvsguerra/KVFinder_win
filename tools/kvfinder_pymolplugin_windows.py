@@ -43,17 +43,28 @@
 #                                                                                                  #
 ####################################################################################################
 
-import tkSimpleDialog
-import tkMessageBox
-from Tkinter import *
 import math
-from pymol import cmd
-from pymol.cgo import *
 import pymol
-import sys, zlib, commands
+from pymol import cmd
+import sys
+import os
 import Pmw
-import tkFileDialog
+import re
 
+if sys.version_info[0] < 3:
+    import tkSimpleDialog
+    import tkMessageBox
+    import tkFileDialog
+    from Tkinter import *
+else:
+    from tkinter import simpledialog as tkSimpleDialog
+    import tkinter.messagebox as tkMessageBox
+    import tkinter.filedialog as tkFileDialog
+    from tkinter import *
+    unichr = chr
+
+# fix for Python 2.7.10: KVFinder expects int (0/1), not bool (True/False)
+BooleanVar = IntVar
 
 #Initialization of all the global variables in the default values
 
@@ -1044,8 +1055,10 @@ def runKVFinder(d, s, p, v, surf, lf, dc, l, o, l_out, p_out,inp_file,lig_file,o
     print "Running KVFinder for "+infile.get()+"..."
     os.system("\""+os.getenv('KVFinder_PATH')+'\\KVFinder.exe\" 2> '+'KV_Files\\kvfinder_error.log 1> '+o.get()+'.KVFinder.output.tmp')
     print "done!"
-
-    log = open(path.get()+"KV_Files\\KVFinder.log","a+")
+    try:
+        log = open(path.get()+"KV_Files\\KVFinder.log","a+")
+    except:
+        log = open(path.get()+"KV_Files\\KVFinder.log","w")
     tmp = open(path.get()+o.get()+'.KVFinder.output.tmp',"r")
 
     for line in tmp:
@@ -1218,7 +1231,10 @@ def runKVFinderBasic(d, s, p, v, o, surf, lf, dc, l, l_out, p_out,inp_file,lig_f
     os.system("\""+os.getenv('KVFinder_PATH')+'\\KVFinder.exe\" 2> '+'KV_Files\\kvfinder_error.log 1> '+o.get()+'.KVFinder.output.tmp')
     print "done!"
 
-    log = open("KV_Files\\KVFinder.log","a+")
+    try:
+        log = open(path.get()+"KV_Files\\KVFinder.log","a+")
+    except:
+        log = open(path.get()+"KV_Files\\KVFinder.log","w")
     tmp = open(o.get()+'.KVFinder.output.tmp',"r")
 
     for line in tmp:
