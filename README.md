@@ -24,7 +24,7 @@ Compatible with:
 - KVFinder plugin is ready to use.
 
 # Installation of PyMOL 1.8x
-- Follow steps from http://tubiana.me/how-to-install-and-compile-pymol-windows-linux-mac/ 
+- A guide for installing PyMOL 1.8.x in Windows is provided [here](https://github.com/jvsguerra/pymol-1.8.x-windows).
 
 # Example of use
 We include a example directory with a PDB (1FMO.pdb) without water and its ligands.
