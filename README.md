@@ -6,7 +6,7 @@ Working features:
 
 Compatible with:
 - Windows 10
-- PyMOL 1.8x (check *Installation of PyMOL 1.8x* section)
+- PyMOL 1.8.x (check *Installation of PyMOL 1.8.x* section)
 - Python 2.7.17
 
 # Download and Installation
@@ -23,7 +23,7 @@ Compatible with:
 - Restart PyMOL.
 - KVFinder plugin is ready to use.
 
-# Installation of PyMOL 1.8x
+# Installation of PyMOL 1.8.x
 - A guide for installing PyMOL 1.8.x in Windows is provided [here](https://github.com/jvsguerra/pymol-1.8.x-windows).
 
 # Example of use
