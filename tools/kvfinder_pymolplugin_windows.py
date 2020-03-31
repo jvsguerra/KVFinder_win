@@ -671,12 +671,12 @@ def ref_res(o, l_out):
 ############################ Load Results Function ###################################
 
 def LoadResults(rf, par, l_out, l_out2, l_res,inp_file,lig_file,out_file):
-    print rf.get(0,0)
-    if (rf.get(0,0).find("KVFinder.results") == -1):
+    print rf.get(0)
+    if (rf.get(0).find("KVFinder.results") == -1):
         tkMessageBox.showerror("Warning", "Invalid Results File", parent=par)
         return
 
-    load_file = open(rf.get(0,0),"r")
+    load_file = open(rf.get(0),"r")
     for line in load_file:
         if line.find("Input") != -1:
             input_file = line.split()[3]
@@ -717,7 +717,7 @@ def LoadResults(rf, par, l_out, l_out2, l_res,inp_file,lig_file,out_file):
     cmd.load(input_file, load_object_input)
     cmd.load(output_file, load_object_output)
     out = StringVar()
-    out.set(rf.get(0,0)[:-21])
+    out.set(rf.get(0)[:-21])
 
     ref_kvout_v(out, l_out)
     ref_kvout_a(out, l_out2)
