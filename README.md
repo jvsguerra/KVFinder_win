@@ -7,7 +7,7 @@ Working features:
 Compatible with:
 - Windows 10
 - PyMOL 1.8x (check *Installation of PyMOL 1.8x* section)
-- Python 2
+- Python 2.7.17
 
 # Download and Installation
 - Get the latest release from [here](https://github.com/jvsguerra/KVFinder_win/releases/).
