@@ -1016,8 +1016,8 @@ def runKVFinder(d, s, p, v, surf, lf, dc, l, o, l_out, p_out,inp_file,lig_file,o
 
     for x in cmd.get_names("all"):
         if lf.get(lf.curselection()) == x:
-            cmd.save(path.get()+'KV_Files\KVFinder_input_'+lf.get(lf.curselection())+'.pdb', lf.get(lf.curselection()), 0, "pdb")
-            tmpLigFile.set(path.get()+'KV_Files\KVFinder_input_'+lf.get(lf.curselection())+'.pdb')
+            cmd.save(path.get()+'KV_Files\\KVFinder_input_'+lf.get(lf.curselection())+'.pdb', lf.get(lf.curselection()), 0, "pdb")
+            tmpLigFile.set(path.get()+'KV_Files\\KVFinder_input_'+lf.get(lf.curselection())+'.pdb')
 
 
     i = len(o.get()) - 1
@@ -1038,22 +1038,19 @@ def runKVFinder(d, s, p, v, surf, lf, dc, l, o, l_out, p_out,inp_file,lig_file,o
     cmd.save(path.get()+'KV_Files\\'+o.get()+'.KVFinder.input.pdb', l.get(l.curselection()), 0, "pdb")
     infile.set(path.get()+'KV_Files\\'+o.get()+'.KVFinder.input.pdb')
 
-    out_complete = StringVar()
-    out_complete.set(path.get()+o.get())
-
-    saveBox(d, s, p, v, surf, tmpLigFile, dc, out_complete,p_out,par2)
+    saveBox(d, s, p, v, surf, tmpLigFile, dc, o, p_out, par2)
 
 
-    results = open(o.get()+".KVFinder.results.txt","w+")
-    results.write("KVFinder Input = "+'KV_Files\\'+o.get()+'.KVFinder.input.pdb\nKVFinder Output = '+o.get()+".KVFinder.output.pdb\n\n#KVFinder Results:\n")
+    results = open(path.get()+o.get()+".KVFinder.results.txt","w+")
+    results.write("KVFinder Input = "+path.get()+'KV_Files\\'+o.get()+'.KVFinder.input.pdb\nKVFinder Output = '+path.get()+o.get()+".KVFinder.output.pdb\n\n#KVFinder Results:\n")
     results.close()
 
 
     if os.path.isfile(path.get()+'KV_Files\\kvfinder_error.log') == 1:
-        os.system("del "+'KV_Files\\kvfinder_error.log')
+        os.system("del "+path.get()+'KV_Files\\kvfinder_error.log')
 
     print "Running KVFinder for "+infile.get()+"..."
-    os.system("\""+os.getenv('KVFinder_PATH')+'\\KVFinder.exe\" 2> '+'KV_Files\\kvfinder_error.log 1> '+o.get()+'.KVFinder.output.tmp')
+    os.system(os.getenv('KVFinder_PATH')+'\\KVFinder.exe 2> '+path.get()+'KV_Files\\kvfinder_error.log 1> '+path.get()+o.get()+'.KVFinder.output.tmp')
     print "done!"
     try:
         log = open(path.get()+"KV_Files\\KVFinder.log","a+")
@@ -1067,7 +1064,7 @@ def runKVFinder(d, s, p, v, surf, lf, dc, l, o, l_out, p_out,inp_file,lig_file,o
     log.close()
 
     tmp = open(path.get()+o.get()+'.KVFinder.output.tmp',"r")
-    results = open(o.get()+".KVFinder.results.txt","a+")
+    results = open(path.get()+o.get()+".KVFinder.results.txt","a+")
 
     for line in tmp:
         if line.find("Cavity")!=-1:
@@ -1078,18 +1075,18 @@ def runKVFinder(d, s, p, v, surf, lf, dc, l, o, l_out, p_out,inp_file,lig_file,o
 
 
 
-    os.system('del '+o.get()+'.KVFinder.output.tmp')
+    os.system('del '+path.get()+o.get()+'.KVFinder.output.tmp')
     last_object.set(o.get()[i:]+'.KVFinder.output')
 
-    f_in = open(path.get()+'KV_Files\kvfinder_error.log', 'r')
+    f_in = open(path.get()+'KV_Files\\kvfinder_error.log', 'r')
     for line in f_in:
         if line[:18] == "Segmentation fault":
             tkMessageBox.showerror("Warning", "There was an error in the KVFinder software. Try using a smaller box or a bigger step size.", parent=par)
-            os.system("del "+'KV_Files\kvfinder_error.log')
+            os.system("del "+path.get()+'KV_Files\\kvfinder_error.log')
             f_in.close()
             return
     f_in.close()
-    os.system("del "+'KV_Files\kvfinder_error.log')
+    os.system("del "+path.get()+'KV_Files\\kvfinder_error.log')
 
 
 
@@ -1108,16 +1105,16 @@ def runKVFinder(d, s, p, v, surf, lf, dc, l, o, l_out, p_out,inp_file,lig_file,o
         lig_file.configure(text='')
     out_file.configure(text="Output File: "+last_object.get())
 
-
+    os.system("move "+o.get()+'.KVFinder.output.pdb '+path.get()+o.get()+'.KVFinder.output.pdb')
     if os.path.isfile(path.get()+o.get()+".KVFinder.output.pdb") == 1:
         cmd.set("auto_zoom",0)
         cmd.load(path.get()+o.get()+".KVFinder.output.pdb")
         cmd.set("auto_zoom",1)
 
     os.system('del Parameters.txt')
-    os.system('copy KVParameters.txt '+path.get()+'KV_Files\\KVParameters_'+o.get()[i:])
+    os.system('move KVParameters.txt '+path.get()+'KV_Files\\KVParameters_'+o.get()[i:]+'.txt')
 
-    results = open(o.get()+".KVFinder.results.txt","a")
+    results = open(path.get()+o.get()+".KVFinder.results.txt","a")
     results.write("\n#Interface Residues for Each Cavity\n")
 
     cavres = open("cavres.txt", "r")
@@ -1127,6 +1124,9 @@ def runKVFinder(d, s, p, v, surf, lf, dc, l, o, l_out, p_out,inp_file,lig_file,o
     results.close()
     cavres.close()
     os.system("del cavres.txt")
+
+    out_complete = StringVar()
+    out_complete.set(path.get()+o.get())
 
     ref_kvout_v(out_complete, l_out)
     ref_kvout_a(out_complete, l_out2)
@@ -1221,52 +1221,49 @@ def runKVFinderBasic(d, s, p, v, o, surf, lf, dc, l, l_out, p_out,inp_file,lig_f
     StepRed.set(StepRedTmp.get())
     ligandAd.set(ligandAdTmp.get())
 
-    results = open(o.get()+".KVFinder.results.txt","w+")
-    results.write("KVFinder Input = "+'KV_Files\\'+o.get()+'.KVFinder.input.pdb\nKVFinder Output = '+o.get()+".KVFinder.output.pdb\n\n#KVFinder Results:\n")
+    results = open(path.get()+o.get()+".KVFinder.results.txt","w+")
+    results.write("KVFinder Input = "+path.get()+'KV_Files\\'+o.get()+'.KVFinder.input.pdb\nKVFinder Output = '+path.get()+o.get()+".KVFinder.output.pdb\n\n#KVFinder Results:\n")
     results.close()
 
     if os.path.isfile(path.get()+'KV_Files\\kvfinder_error.log') == 1:
-        os.system("del "+'KV_Files\\kvfinder_error.log')
+        os.system("del "+path.get()+'KV_Files\\kvfinder_error.log')
     print "Running KVFinder for "+infile.get()+"..."
-    os.system("\""+os.getenv('KVFinder_PATH')+'\\KVFinder.exe\" 2> '+'KV_Files\\kvfinder_error.log 1> '+o.get()+'.KVFinder.output.tmp')
+    os.system(os.getenv('KVFinder_PATH')+'\\KVFinder.exe 2> '+path.get()+'KV_Files\\kvfinder_error.log 1> '+path.get()+o.get()+'.KVFinder.output.tmp')
     print "done!"
 
     try:
         log = open(path.get()+"KV_Files\\KVFinder.log","a+")
     except:
         log = open(path.get()+"KV_Files\\KVFinder.log","w")
-    tmp = open(o.get()+'.KVFinder.output.tmp',"r")
+    tmp = open(path.get()+o.get()+'.KVFinder.output.tmp',"r")
 
     for line in tmp:
         log.write(line)
     tmp.close()
     log.close()
 
-    tmp = open(o.get()+'.KVFinder.output.tmp',"r")
-    results = open(o.get()+".KVFinder.results.txt","a+")
+    tmp = open(path.get()+o.get()+'.KVFinder.output.tmp',"r")
+    results = open(path.get()+o.get()+".KVFinder.results.txt","a+")
 
     for line in tmp:
-        if line.find("Cavity")!=-1:
+        if line.find("Cavity") != -1:
             results.write(line)
 
     results.close()
     tmp.close()
 
-
-
-    os.system('del '+o.get()+'.KVFinder.output.tmp')
+    os.system('del '+path.get()+o.get()+'.KVFinder.output.tmp')
     last_object.set(o.get()+'.KVFinder.output')
 
-    f_in = open(path.get()+'KV_Files\kvfinder_error.log', 'r')
+    f_in = open(path.get()+'KV_Files\\kvfinder_error.log', 'r')
     for line in f_in:
         if line[:18] == "Segmentation fault":
             tkMessageBox.showerror("Warning", "There was an error in the KVFinder software. Try using a smaller box or a bigger step size.", parent=par)
-            os.system("del "+'KV_Files\kvfinder_error.log')
+            os.system("del "+ path.get()+'KV_Files\\kvfinder_error.log')
             f_in.close()
             return
     f_in.close()
-    os.system("del "+'KV_Files\kvfinder_error.log')
-
+    os.system("del "+path.get()+'KV_Files\\kvfinder_error.log')
 
 
     inp_file.configure(text="Input File: "+l.get(l.curselection()))
@@ -1285,16 +1282,16 @@ def runKVFinderBasic(d, s, p, v, o, surf, lf, dc, l, l_out, p_out,inp_file,lig_f
         lig_file.configure(text='')
     out_file.configure(text="Output File: "+last_object.get())
 
-
-    if os.path.isfile(o.get()+".KVFinder.output.pdb") == 1:
+    os.system("move "+o.get()+'.KVFinder.output.pdb '+path.get()+o.get()+'.KVFinder.output.pdb')
+    if os.path.isfile(path.get()+o.get()+".KVFinder.output.pdb") == 1:
         cmd.set("auto_zoom",0)
-        cmd.load(o.get()+".KVFinder.output.pdb")
+        cmd.load(path.get()+o.get()+".KVFinder.output.pdb")
         cmd.set("auto_zoom",1)
 
     os.system('del Parameters.txt')
-    os.system('copy KVParameters.txt KV_File\\KVParameters_'+o.get())
+    os.system('move KVParameters.txt '+path.get()+'KV_Files\\KVParameters_'+o.get()+'.txt')
 
-    results = open(o.get()+".KVFinder.results.txt","a")
+    results = open(path.get()+o.get()+".KVFinder.results.txt","a")
     results.write("\n#Interface Residues for Each Cavity\n")
 
     cavres = open("cavres.txt", "r")
@@ -1305,9 +1302,13 @@ def runKVFinderBasic(d, s, p, v, o, surf, lf, dc, l, l_out, p_out,inp_file,lig_f
     cavres.close()
     os.system("del cavres.txt")
 
-    ref_kvout_v(o, l_out)
-    ref_kvout_a(o, l_out2)
-    ref_res(o,l_res)
+
+    out_complete = StringVar()
+    out_complete.set(path.get()+o.get())
+
+    ref_kvout_v(out_complete, l_out)
+    ref_kvout_a(out_complete, l_out2)
+    ref_res(out_complete,l_res)
 
 
 
@@ -1355,7 +1356,7 @@ def selectFolder(folder):
     if len(folderName) == 0:
         folderName = oldFolder
 
-    folder.insert(0,folderName)
+    folder.insert(0,folderName.replace('/', '\\'))
     folder.configure(state='readonly')
 
     path.set(folder.get()+'\\')
