@@ -1525,7 +1525,6 @@ def testDialog():
 
     advanced_tab = notebook.add('Advanced')
 
-
     notebook_adv = Pmw.NoteBook(advanced_tab)
     notebook_adv.grid()
 
